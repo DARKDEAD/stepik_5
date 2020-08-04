@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Stepik Delivery</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+        /* Sticky footer styles
+        -------------------------------------------------- */
+        html {
+            position: relative;
+            min-height: 100%;
+        }
+
+        body {
+            margin-bottom: 60px; /* Margin bottom by footer height */
+        }
+
+        .footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 60px; /* Set the fixed height of the footer here */
+            line-height: 60px; /* Vertically center the text there */
+        }
+
+        .navbar {
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+<main class="container mt-3">
+
+    {% block container %} {% endblock %}
+
+</main>
+
+<footer class="footer">
+    <nav class="container navbar navbar-light bg-light">
+        <ul class="navbar-nav mr-auto">
+            <p class="h4 nav-link">Stepik Delivery</p>
+        </ul>
+        <a class="text-muted" href="#">Project author 2020</a>
+    </nav>
+</footer>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script>
+    {#    $(document).ready(function(){#}
+    {#        $("#myModalBox").modal('show');#}
+    {#    });#}
+    $(function () {
+        $('button1').click(function () {
+            $.ajax({
+                url: '/addtocart',
+                type: 'POST',
+                data: {'id_dish': this.id},
+                success: function (response) {
+                    $('#cart').text('Корзина ( ' + response['amount'] + ' блюда ' + response['sum'] + ' руб.)')
+
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        });
+    });
+</script>
+<script>
+    $(function () {
+        $('.remove_from_cart').click(function () {
+            $.ajax({
+                    url: '/deldish',
+                    type: 'POST',
+                    data: {'id_dish': this.id},
+                    success: function (response) {
+                        console.log(response);
+
+                        $('#cart_list').html(response['url'])
+
+
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                }
+            )
+        })
+    })
+</script>
+<script>
+    $(document).ready(function () {
+
+        $('table.table1').on('click', "button", function () {
+            $.ajax({
+                    url: '/deldish',
+                    type: 'POST',
+                    data: {'id_dish': this.id},
+                    success: function (response) {
+                        console.log(response);
+
+                        $('#cart_list').html(response['url'])
+
+
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                }
+            )
+        })
+    })
+
+</script>
+</body>
+</html>
