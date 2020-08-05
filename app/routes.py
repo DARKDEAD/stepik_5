@@ -3,7 +3,7 @@ from flask import make_response, redirect
 from flask import render_template, session, request
 from flask import url_for
 
-from app.models import Category, Dish, User
+from app.models import Category, Dish, User, Order
 from app.models import register_client, add_new_order
 from app.forms import UserCartForm, AuthForm
 from app import app
@@ -171,5 +171,9 @@ def render_register():
 
 
 @app.route("/account")
-def rebder_account():
-    return render_template("account.html")
+def render_account():
+    orders = Order.query.filter(Order.mail == session['auth']['user_mail']).order_by(Order.date.desc()).all()
+    for order in orders:
+        print (order.date)
+
+    return render_template("account.html", orders=orders)
