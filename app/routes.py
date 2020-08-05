@@ -104,17 +104,18 @@ def render_cart():
             return render_template('cart.html', form=form, user=user)
 
         if session['auth']['login']:
-            add_new_order(session.pop('cart'), session.get('auth'), phone)
-
+            add_new_order(session.get('cart'), session.get('auth'), phone)
+            session['cart'] = []
             return render_template('ordered.html')
 
         if form.validate_on_submit():
-            add_new_order(session.pop('cart'),
+            add_new_order(session.get('cart'),
                           {
                               'user_mail': form.mail.data,
                               'address'  : form.address.data,
                           },
                           phone)
+            session['cart'] = []
             return render_template('ordered.html')
 
     if session['auth']['login']:
@@ -167,3 +168,8 @@ def render_register():
                 return redirect(url_for('render_index'))
 
     return render_template('register.html', form=form)
+
+
+@app.route("/account")
+def rebder_account():
+    return render_template("account.html")
