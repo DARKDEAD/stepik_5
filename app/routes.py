@@ -173,7 +173,5 @@ def render_register():
 @app.route("/account")
 def render_account():
     orders = Order.query.filter(Order.mail == session['auth']['user_mail']).order_by(Order.date.desc()).all()
-    for order in orders:
-        print (order.date)
 
     return render_template("account.html", orders=orders)
