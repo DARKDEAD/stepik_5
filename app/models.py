@@ -17,7 +17,6 @@ class User(db.Model):
     password_hash = db.Column(db.String(255), nullable=False)
     address = db.Column(db.String(255))
 
-    # orders = db.relationship("Order", back_populates="users")
     orders_id = db.Column(db.Integer, db.ForeignKey("orders.id"))
 
     @property
@@ -71,7 +70,6 @@ class Category(db.Model):
     title = db.Column(db.String(50), nullable=False)
 
     dish = db.relationship("Dish", back_populates="categories")
-    # dish_id = db.Column(db.Integer, db.ForeignKey("dishes.id"))
 
 
 def register_client(name, mail, password):
