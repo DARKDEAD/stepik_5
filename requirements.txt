@@ -16,7 +16,7 @@ Flask-WTF==0.14.3
 idna==2.10
 itsdangerous==1.1.0
 Jinja2==2.11.2
-Mako==1.1.3
+Mako==1.2.2
 MarkupSafe==1.1.1
 mysql-connector-python==8.0.21
 pathspec==0.8.0
